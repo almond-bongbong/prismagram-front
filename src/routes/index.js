@@ -1,31 +1,31 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { HashRouter as Router, Route } from 'react-router-dom';
+import { HashRouter as Router, Route, Routes } from 'react-router-dom';
 import Auth from './Auth';
 import Feed from './Feed';
 
-function Routes({ isLoggedIn }) {
+function RoutesIndex({ isLoggedIn }) {
   return <Router>{isLoggedIn ? <LoggedInRoutes /> : <LoggedOutRoutes />}</Router>;
 }
 
-Routes.propTypes = {
+RoutesIndex.propTypes = {
   isLoggedIn: PropTypes.bool.isRequired,
 };
 
-export default Routes;
+export default RoutesIndex;
 
 function LoggedOutRoutes() {
   return (
-    <>
-      <Route path="/" component={Auth} />
-    </>
+    <Routes>
+      <Route path="/" element={<Auth />} />
+    </Routes>
   );
 }
 
 function LoggedInRoutes() {
   return (
-    <>
-      <Route path="/" component={Feed} />
-    </>
+    <Routes>
+      <Route path="/" element={<Feed />} />
+    </Routes>
   );
 }

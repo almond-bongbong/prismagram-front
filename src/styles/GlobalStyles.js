@@ -7,4 +7,14 @@ export default createGlobalStyle`
   * {
     box-sizing: border-box;
   }
+  
+  body {
+    background-color: ${({ theme }) => theme.bgColor};
+    color: ${({ theme }) => theme.blackColor}
+  }
+  
+  a {
+    color: ${({ theme }) => theme.blueColor}
+    text-decoration: none;
+  }
 `;
