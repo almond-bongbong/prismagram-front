@@ -6,6 +6,12 @@ import RoutesIndex from './routes';
 import Theme from './styles/Theme';
 import { useQuery } from 'react-apollo-hooks';
 
+const Wrapper = styled.div`
+  margin: 0 auto;
+  max-width: 935px;
+  width: 100%;
+`;
+
 const Box = styled.div`
   ${({ theme }) => theme.whiteBox};
 `;
@@ -22,9 +28,11 @@ function App() {
 
   return (
     <ThemeProvider theme={Theme}>
-      <GlobalStyles />
-      <Box>hello box</Box>
-      <RoutesIndex isLoggedIn={data.isLoggedIn} />
+      <Wrapper>
+        <GlobalStyles />
+        <Box>hello box</Box>
+        <RoutesIndex isLoggedIn={data.isLoggedIn} />
+      </Wrapper>
     </ThemeProvider>
   );
 }
