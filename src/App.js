@@ -12,10 +12,6 @@ const Wrapper = styled.div`
   width: 100%;
 `;
 
-const Box = styled.div`
-  ${({ theme }) => theme.whiteBox};
-`;
-
 const QUERY = gql`
   {
     isLoggedIn @client
@@ -24,13 +20,11 @@ const QUERY = gql`
 
 function App() {
   const { data } = useQuery(QUERY);
-  console.log(data);
 
   return (
     <ThemeProvider theme={Theme}>
       <Wrapper>
         <GlobalStyles />
-        <Box>hello box</Box>
         <RoutesIndex isLoggedIn={data.isLoggedIn} />
       </Wrapper>
     </ThemeProvider>
