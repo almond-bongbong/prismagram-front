@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
-import Input from '../components/form/Input';
-import Button from '../components/form/Button';
+import Input from '../../components/form/Input';
+import Button from '../../components/form/Button';
 
 const Wrapper = styled.div`
   min-height: 80vh;
@@ -46,25 +46,30 @@ const Form = styled(Box)`
   }
 `;
 
-function Auth() {
-  const [action, setAction] = useState('logIn');
-
+function AuthPresenter({
+  action,
+  setAction,
+  username,
+  name,
+  email,
+  handleUsername,
+  handleName,
+  handleEmail,
+  onLogin,
+}) {
   return (
     <Wrapper>
       <Form>
         {action === 'logIn' ? (
-          <form>
-            <Input placeholder={'Username'} />
-            <Input placeholder={'Password'} />
+          <form onSubmit={onLogin}>
+            <Input value={email} onChange={handleEmail} placeholder={'Email'} type="email" />
             <Button text={'Log in'} />
           </form>
         ) : (
-          <form>
-            <Input placeholder={'First name'} />
-            <Input placeholder={'Last name'} />
-            <Input placeholder={'Email'} />
-            <Input placeholder={'Username'} />
-            <Input placeholder={'Password'} />
+          <form onSubmit={onLogin}>
+            <Input value={name} onChange={handleName} placeholder={'Name'} />
+            <Input value={email} onChange={handleEmail} placeholder={'Email'} type="email" />
+            <Input value={username} onChange={handleUsername} placeholder={'Username'} />
             <Button text={'Sign up'} />
           </form>
         )}
@@ -84,4 +89,4 @@ function Auth() {
   );
 }
 
-export default Auth;
+export default AuthPresenter;
