@@ -5,6 +5,9 @@ import GlobalStyles from './styles/GlobalStyles';
 import RoutesIndex from './routes';
 import Theme from './styles/Theme';
 import { useQuery } from 'react-apollo-hooks';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import Footer from './components/layout/Footer';
 
 const Wrapper = styled.div`
   margin: 0 auto;
@@ -26,6 +29,8 @@ function App() {
       <Wrapper>
         <GlobalStyles />
         <RoutesIndex isLoggedIn={data.isLoggedIn} />
+        <ToastContainer position={toast.POSITION.TOP_RIGHT} />
+        <Footer />
       </Wrapper>
     </ThemeProvider>
   );

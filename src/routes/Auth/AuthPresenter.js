@@ -52,39 +52,68 @@ function AuthPresenter({
   username,
   name,
   email,
+  secret,
   handleUsername,
   handleName,
   handleEmail,
-  onLogin,
+  handleSecret,
+  onSubmit,
+  required,
 }) {
   return (
     <Wrapper>
       <Form>
-        {action === 'logIn' ? (
-          <form onSubmit={onLogin}>
-            <Input value={email} onChange={handleEmail} placeholder={'Email'} type="email" />
-            <Button text={'Log in'} />
+        {action === 'logIn' && (
+          <form onSubmit={onSubmit}>
+            <Input value={email} onChange={handleEmail} placeholder="Email" type="email" />
+            <Button text="Log in" />
           </form>
-        ) : (
-          <form onSubmit={onLogin}>
-            <Input value={name} onChange={handleName} placeholder={'Name'} />
-            <Input value={email} onChange={handleEmail} placeholder={'Email'} type="email" />
-            <Input value={username} onChange={handleUsername} placeholder={'Username'} />
-            <Button text={'Sign up'} />
+        )}
+        {action === 'confirm' && (
+          <form onSubmit={onSubmit}>
+            <Input
+              value={secret}
+              onChange={handleSecret}
+              placeholder="Paste your secret"
+              required={required}
+            />
+            <Button text="Confirm" />
+          </form>
+        )}
+        {action === 'signUp' && (
+          <form onSubmit={onSubmit}>
+            <Input value={name} onChange={handleName} placeholder={'Name'} required={required} />
+            <Input
+              value={email}
+              onChange={handleEmail}
+              placeholder="Email"
+              type="email"
+              required={required}
+            />
+            <Input
+              value={username}
+              onChange={handleUsername}
+              placeholder="Username"
+              required={required}
+            />
+            <Button text="Sign up" />
           </form>
         )}
       </Form>
-      <StateChanger>
-        {action === 'logIn' ? (
-          <>
-            Don't have an account? <Link onClick={() => setAction('signUp')}>Sign up</Link>
-          </>
-        ) : (
-          <>
-            Have an account? <Link onClick={() => setAction('logIn')}>Log in</Link>
-          </>
-        )}
-      </StateChanger>
+      {(action === 'logIn' || action === 'signUp') && (
+        <StateChanger>
+          {action === 'logIn' && (
+            <>
+              Don't have an account? <Link onClick={() => setAction('signUp')}>Sign up</Link>
+            </>
+          )}
+          {action === 'signUp' && (
+            <>
+              Have an account? <Link onClick={() => setAction('logIn')}>Log in</Link>
+            </>
+          )}
+        </StateChanger>
+      )}
     </Wrapper>
   );
 }
