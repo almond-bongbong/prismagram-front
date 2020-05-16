@@ -3,9 +3,8 @@ import AuthPresenter from './AuthPresenter';
 import useInput from '../../hooks/useInput';
 import { useMutation } from 'react-apollo-hooks';
 import { CONFIRM_SECRET, CREATE_ACCOUNT, LOCAL_LOG_IN, LOG_IN } from './AuthQueries';
-import Loading from '../../components/common/Loading';
+import Loader from '../../components/common/Loader';
 import { toast } from 'react-toastify';
-import Footer from '../../components/layout/Footer';
 
 function AuthContainer() {
   const [action, setAction] = useState('logIn');
@@ -118,7 +117,7 @@ function AuthContainer() {
       {(loadingRequestSecret ||
         loadingConfirmSecret ||
         loadingCreateAccount ||
-        loadingLocalLogin) && <Loading />}
+        loadingLocalLogin) && <Loader />}
     </>
   );
 }

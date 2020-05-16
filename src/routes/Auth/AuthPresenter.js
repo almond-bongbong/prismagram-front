@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import Input from '../../components/form/Input';
 import Button from '../../components/form/Button';
+import { Helmet } from 'react-helmet';
 
 const Wrapper = styled.div`
   min-height: 80vh;
@@ -64,40 +65,55 @@ function AuthPresenter({
     <Wrapper>
       <Form>
         {action === 'logIn' && (
-          <form onSubmit={onSubmit}>
-            <Input value={email} onChange={handleEmail} placeholder="Email" type="email" />
-            <Button text="Log in" />
-          </form>
+          <>
+            <Helmet>
+              <title>Log In | Prismagram</title>
+            </Helmet>
+            <form onSubmit={onSubmit}>
+              <Input value={email} onChange={handleEmail} placeholder="Email" type="email" />
+              <Button text="Log in" />
+            </form>
+          </>
         )}
         {action === 'confirm' && (
-          <form onSubmit={onSubmit}>
-            <Input
-              value={secret}
-              onChange={handleSecret}
-              placeholder="Paste your secret"
-              required={required}
-            />
-            <Button text="Confirm" />
-          </form>
+          <>
+            <Helmet>
+              <title>Confirm Secret | Prismagram</title>
+            </Helmet>
+            <form onSubmit={onSubmit}>
+              <Input
+                value={secret}
+                onChange={handleSecret}
+                placeholder="Paste your secret"
+                required={required}
+              />
+              <Button text="Confirm" />
+            </form>
+          </>
         )}
         {action === 'signUp' && (
-          <form onSubmit={onSubmit}>
-            <Input value={name} onChange={handleName} placeholder={'Name'} required={required} />
-            <Input
-              value={email}
-              onChange={handleEmail}
-              placeholder="Email"
-              type="email"
-              required={required}
-            />
-            <Input
-              value={username}
-              onChange={handleUsername}
-              placeholder="Username"
-              required={required}
-            />
-            <Button text="Sign up" />
-          </form>
+          <>
+            <Helmet>
+              <title>Sign Up | Prismagram</title>
+            </Helmet>
+            <form onSubmit={onSubmit}>
+              <Input value={name} onChange={handleName} placeholder={'Name'} required={required} />
+              <Input
+                value={email}
+                onChange={handleEmail}
+                placeholder="Email"
+                type="email"
+                required={required}
+              />
+              <Input
+                value={username}
+                onChange={handleUsername}
+                placeholder="Username"
+                required={required}
+              />
+              <Button text="Sign up" />
+            </form>
+          </>
         )}
       </Form>
       {(action === 'logIn' || action === 'signUp') && (

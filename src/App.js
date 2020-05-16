@@ -2,8 +2,9 @@ import React from 'react';
 import { gql } from 'apollo-boost';
 import styled, { ThemeProvider } from 'styled-components';
 import GlobalStyles from './styles/GlobalStyles';
-import RoutesIndex from './routes';
+import AppRouter from './routes';
 import Theme from './styles/Theme';
+import { HashRouter as Router } from 'react-router-dom';
 import { useQuery } from 'react-apollo-hooks';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -24,16 +25,19 @@ const QUERY = gql`
 
 function App() {
   const { data } = useQuery(QUERY);
+  const { isLoggedIn } = data || {};
 
   return (
     <ThemeProvider theme={Theme}>
-      <Header />
-      <Wrapper>
-        <GlobalStyles />
-        <RoutesIndex isLoggedIn={data.isLoggedIn} />
-        <ToastContainer position={toast.POSITION.TOP_RIGHT} />
-        <Footer />
-      </Wrapper>
+      <GlobalStyles />
+      <Router>
+        {isLoggedIn && <Header />}
+        <Wrapper>
+          <AppRouter isLoggedIn={isLoggedIn} />
+          <ToastContainer position={toast.POSITION.TOP_RIGHT} />
+          <Footer />
+        </Wrapper>
+      </Router>
     </ThemeProvider>
   );
 }

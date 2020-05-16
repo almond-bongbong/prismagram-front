@@ -3,6 +3,7 @@ import styled from 'styled-components';
 
 const Footer = styled.footer`
   display: flex;
+  margin: 50px 0;
   justify-content: space-between;
   align-items: center;
   text-transform: uppercase;
