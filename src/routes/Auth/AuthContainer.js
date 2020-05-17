@@ -12,13 +12,13 @@ function AuthContainer() {
   const [name, handleName] = useInput('');
   const [email, handleEmail] = useInput('');
   const [secret, handleSecret] = useInput('');
-  const [requestSecret, { loading: loadingRequestSecret }] = useMutation(LOG_IN, {
+  const [requestSecretMutation, { loading: loadingRequestSecret }] = useMutation(LOG_IN, {
     variables: { email },
   });
-  const [createAccount, { loading: loadingCreateAccount }] = useMutation(CREATE_ACCOUNT, {
+  const [createAccountMutation, { loading: loadingCreateAccount }] = useMutation(CREATE_ACCOUNT, {
     variables: { username, email, name },
   });
-  const [confirmSecret, { loading: loadingConfirmSecret }] = useMutation(CONFIRM_SECRET, {
+  const [confirmSecretMutation, { loading: loadingConfirmSecret }] = useMutation(CONFIRM_SECRET, {
     variables: { secret, email },
   });
   const [localLogin, { loading: loadingLocalLogin }] = useMutation(LOCAL_LOG_IN);
@@ -27,7 +27,7 @@ function AuthContainer() {
     if (!email) return toast('Input email');
 
     try {
-      const { data } = await requestSecret();
+      const { data } = await requestSecretMutation();
 
       if (data.requestSecret) {
         toast.success('Check your inbox for your login secret');
@@ -49,7 +49,7 @@ function AuthContainer() {
     }
 
     try {
-      const { data } = await confirmSecret();
+      const { data } = await confirmSecretMutation();
       const token = data.confirmSecret;
 
       if (token) {
@@ -68,7 +68,7 @@ function AuthContainer() {
     }
 
     try {
-      const { data } = await createAccount();
+      const { data } = await createAccountMutation();
 
       if (data.createAccount) {
         toast.success('Account created! Log In now');
