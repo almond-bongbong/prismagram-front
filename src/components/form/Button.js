@@ -15,12 +15,21 @@ const Container = styled.button`
   cursor: pointer;
 `;
 
-function Button({ text }) {
-  return <Container>{text}</Container>;
+function Button({ text, type, className, onClick }) {
+  return (
+    <Container type={type} className={className} onClick={onClick}>
+      {text}
+    </Container>
+  );
 }
 
 Button.propTypes = {
   text: PropTypes.string.isRequired,
+  type: PropTypes.oneOf(['button', 'submit']),
+};
+
+Button.defaultProps = {
+  type: 'submit',
 };
 
 export default Button;

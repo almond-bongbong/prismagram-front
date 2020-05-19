@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import useInput from '../../hooks/useInput';
 import FatText from '../../components/form/FatText';
 import Avatar from '../../components/common/Avatar';
@@ -183,8 +184,10 @@ function Post({ id, author, files, likeCount, isLiked, comments, createdAt, capt
       <Header>
         <Avatar size="sm" url={author.avatar || defaultAvatar} />
         <UserColumn>
-          <FatText text={author.username} />
-          <Location>{location}</Location>
+          <Link to={`/${author.username}`}>
+            <FatText text={author.username} />
+            <Location>{location}</Location>
+          </Link>
         </UserColumn>
       </Header>
       <Files>
