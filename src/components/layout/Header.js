@@ -4,8 +4,8 @@ import { Link, useNavigate } from 'react-router-dom';
 import Input from '../form/Input';
 import useInput from '../../hooks/useInput';
 import Icons from '../common/Icons';
-import { gql } from 'apollo-boost';
 import { useQuery } from 'react-apollo-hooks';
+import { ME } from '../../CommonQueries';
 
 const Container = styled.header`
   width: 100%;
@@ -59,15 +59,6 @@ const SearchInput = styled(Input)`
 const HeaderLink = styled(Link)`
   &:not(:last-child) {
     margin-right: 30px;
-  }
-`;
-
-const ME = gql`
-  {
-    seeMyProfile {
-      id
-      username
-    }
   }
 `;
 

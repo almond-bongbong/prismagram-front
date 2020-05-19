@@ -1,16 +1,18 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import useInput from '../../hooks/useInput';
-import Avatar from '../../components/post/Avatar';
 import FatText from '../../components/form/FatText';
+import Avatar from '../../components/common/Avatar';
 import Icons from '../../components/common/Icons';
 import styled from 'styled-components';
 import defaultAvatar from '../../images/common/default-avatar.jpg';
 import TextareaAutosize from 'react-autosize-textarea';
-import { useMutation } from 'react-apollo-hooks';
+import { useMutation, useQuery } from 'react-apollo-hooks';
 import { ADD_COMMENT, TOGGLE_LIKE } from './PostQueries';
 import { toast } from 'react-toastify';
 import useUpdateEffect from '../../hooks/useUpdateEffect';
+import { ME } from '../../CommonQueries';
+import moment from 'moment';
 
 const Container = styled.div`
   ${(props) => props.theme.whiteBox};
@@ -96,11 +98,29 @@ const TextArea = styled(TextareaAutosize)`
   }
 `;
 
+const Comments = styled.ul`
+  margin-top: 10px;
+`;
+
+const Comment = styled.li`
+  margin-bottom: 7px;
+  span {
+    margin-right: 5px;
+  }
+`;
+
+const Caption = styled.div`
+  margin: 10px 0;
+`;
+
 function Post({ id, author, files, likeCount, isLiked, comments, createdAt, caption, location }) {
   const [localIsLiked, setLocalIsLiked] = useState(isLiked);
   const [localLikeCount, setLocalLikeCount] = useState(likeCount);
-  const [comment, handleComment] = useInput('');
+  const [localComments, setLocalComments] = useState(comments);
+  const [comment, handleComment, setComment] = useInput('');
   const [currentImage, setCurrentImage] = useState(0);
+  const { data } = useQuery(ME);
+  const me = data?.seeMyProfile;
   const [toggleLikeMutation] = useMutation(TOGGLE_LIKE, {
     variables: { postId: id, isLike: !localIsLiked },
   });
@@ -135,6 +155,29 @@ function Post({ id, author, files, likeCount, isLiked, comments, createdAt, capt
     setLocalLikeCount((prev) => (localIsLiked ? prev + 1 : prev - 1));
   }, [localIsLiked]);
 
+  const handleCommentKeyPress = async (e) => {
+    if (e.charCode === 13) {
+      e.preventDefault();
+
+      setLocalComments((prev) =>
+        prev.concat({
+          id: new Date().getTime(),
+          text: comment,
+          user: {
+            username: me.username,
+          },
+        })
+      );
+      setComment('');
+
+      try {
+        await addCommentMutation();
+      } catch (e) {
+        toast.error("Can't send comment");
+      }
+    }
+  };
+
   return (
     <Container>
       <Header>
@@ -160,8 +203,26 @@ function Post({ id, author, files, likeCount, isLiked, comments, createdAt, capt
           </Button>
         </Buttons>
         <FatText text={localLikeCount === 1 ? '1 like' : `${localLikeCount} likes`} />
-        <Timestamp>{createdAt}</Timestamp>
-        <TextArea value={comment} onChange={handleComment} placeholder="Add a comment" />
+        <Caption>
+          <FatText text={author.username} /> {caption}
+        </Caption>
+        {localComments && (
+          <Comments>
+            {localComments.map((comment) => (
+              <Comment key={comment.id}>
+                <FatText text={comment.user.username} />
+                {comment.text}
+              </Comment>
+            ))}
+          </Comments>
+        )}
+        <Timestamp>{moment(createdAt).format('YYYY-MM-DD HH:mm:ss')}</Timestamp>
+        <TextArea
+          value={comment}
+          onChange={handleComment}
+          onKeyPress={handleCommentKeyPress}
+          placeholder="Add a comment..."
+        />
       </Meta>
     </Container>
   );

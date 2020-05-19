@@ -7,12 +7,13 @@ const Text = styled.span`
   user-select: none;
 `;
 
-function FatText({ text }) {
-  return <Text>{text}</Text>;
+function FatText({ text, className }) {
+  return <Text className={className}>{text}</Text>;
 }
 
 FatText.propTypes = {
   text: PropTypes.string.isRequired,
+  className: PropTypes.string,
 };
 
 export default FatText;
