@@ -21,6 +21,7 @@ export const resolvers = {
           isLoggedIn: false,
         },
       });
+      window.location = '/';
 
       return null;
     },

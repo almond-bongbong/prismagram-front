@@ -19,7 +19,12 @@ const Container = styled.div`
   ${(props) => props.theme.whiteBox};
   width: 100%;
   max-width: 600px;
+  user-select: none;
   margin-bottom: 25px;
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
 `;
 
 const Header = styled.header`

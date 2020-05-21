@@ -46,6 +46,7 @@ const FEED_QUERY = gql`
 
 function Feed() {
   const { data, loading } = useQuery(FEED_QUERY);
+  console.log('feed', data);
   return (
     <Container>
       <Helmet>
