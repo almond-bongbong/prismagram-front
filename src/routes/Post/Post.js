@@ -59,7 +59,7 @@ const File = styled.div`
   right: 0;
   bottom: 0;
   left: 0;
-  background-image: url(${({ src }) => src}});
+  background-image: url(${({ src }) => src});
   background-size: cover;
   background-position: center;
   opacity: ${(props) => (props.showing ? 1 : 0)};
