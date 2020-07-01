@@ -1,1 +1,1 @@
-# Instagram clone project with graphql, prisma
+> Instagram clone project with graphql, prisma
